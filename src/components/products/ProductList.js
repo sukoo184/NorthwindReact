@@ -1,12 +1,24 @@
 import React from 'react'
+import { connect } from 'react-redux';
+import { Badge } from 'reactstrap';
 
-function ProductList() {
+function ProductList( props) {
     return (
         <div>
-            <h2>Product List</h2>
+            <h2>
+            <Badge color='warning'> Product</Badge>
+                 <Badge color='success'>{props.currentCategory.categoryName}</Badge></h2>
             
         </div>
     )
 }
+function mapStatetToProps(state) {
+    return {
+      currentCategory: state.changeCategoryReducer,
+      
+    };
+  }
 
-export default ProductList
+
+  export default connect(mapStatetToProps, )(ProductList);
+  

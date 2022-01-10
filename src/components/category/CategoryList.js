@@ -1,30 +1,59 @@
-import { render } from "@testing-library/react";
-import React, { Component } from "react";
+
+import React, { Component, useEffect } from "react";
 import { connect } from "react-redux";
-import { Button } from "reactstrap";
+import { Badge, Button, ListGroup, ListGroupItem } from "reactstrap";
 import { bindActionCreators } from "redux";
 import * as categoryActions from "../../redux/actions/categoryActions";
 
-
 function CategoryList(props) {
- 
+  useEffect(() => {
+    props.actions.getCategories();
+  });
+
+  let selectCategory = (category)=>{
+    props.actions.changeCategory(category);
+  };
+   
   
+
+
   return (
-  
-    
     <div>
-      debugger;
-      <h2>category List {props.actions.getCategories().length} </h2>
-      <h5>Seçilen Kategory: {props.currentCategory.categoryName}</h5>
-      <Button style={{background:'linear-gradient(45deg,#FF54F2, #FF8E53)', border:0,borderRadius:20,padding:'14px 30px'
-      
-      
-    }}>Go to the</Button>
+      <h2> <Badge color='warning'> Category List</Badge> </h2>
+      <ListGroup>
+        {props.categories.map((category) => (
+          <ListGroupItem
+            active={category.id == props.currentCategory.id}
+            style={{
+              background: "linear-gradient(45deg, #FF569A ,#00AAFF)",
+              border: 0,
+              borderRadius: 20,
+              padding: "14px 30px",
+            }}
+            onClick={() => selectCategory(category)}
+            key={category.id}
+          >
+            {category.categoryName}
+          </ListGroupItem>
+        ))}
+      </ListGroup>
+
+{/* 
+
+        <Button
+        style={{
+          background: "linear-gradient(45deg,#FF54F2, #FF8E53)",
+          border: 0,
+          borderRadius: 20,
+          padding: "14px 30px",
+        }}
+      >
+        Go to 
+      </Button> */}
     </div>
-  )
+  );
+}
 
-
-  }
 function mapStatetToProps(state) {
   return {
     currentCategory: state.changeCategoryReducer,
@@ -39,11 +68,12 @@ function mapDispatchToProps(dispatch) {
         categoryActions.getCategories,
         dispatch
       ),
+      changeCategory: bindActionCreators(
+        categoryActions.changeCategory,
+        dispatch
+      ),
     },
   };
 }
 
-
 export default connect(mapStatetToProps, mapDispatchToProps)(CategoryList);
-
-

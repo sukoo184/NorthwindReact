@@ -1,6 +1,6 @@
 //başlangıc Statelerini tutar
 
 export default {
-  currentCategory: { categoryName: "Beverages" },
+  currentCategory: {  },
   categories: [],
 };
