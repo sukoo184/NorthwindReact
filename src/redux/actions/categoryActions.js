@@ -7,7 +7,7 @@ export function changeCategory(category) {
   };
 }
 
-export function getCategorieesSuccess(categories){
+export function getCategoriesSuccess(categories){
     return{type:actionTypes.GET_CATEGORIES_SUCCESS,payload:categories}
 }
 
@@ -17,6 +17,6 @@ export function getCategories() {
     let url = "http://localhost:3000/categories";
     return fetch(url)
       .then(response => response.json())
-      .then(result => dispatch(getCategorieesSuccess(result)));
+      .then(result => dispatch(getCategoriesSuccess(result)));
   };
 }

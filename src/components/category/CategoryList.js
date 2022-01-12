@@ -1,34 +1,36 @@
-
-import React, { Component, useEffect } from "react";
-import { connect } from "react-redux";
-import { Badge, Button, ListGroup, ListGroupItem } from "reactstrap";
-import { bindActionCreators } from "redux";
-import * as categoryActions from "../../redux/actions/categoryActions";
+import React, { Component, useEffect } from 'react'
+import { connect } from 'react-redux'
+import { Badge, Button, ListGroup, ListGroupItem } from 'reactstrap'
+import { bindActionCreators } from 'redux'
+import * as categoryActions from '../../redux/actions/categoryActions'
+import * as productActions from '../../redux/actions/productActions'
 
 function CategoryList(props) {
   useEffect(() => {
-    props.actions.getCategories();
-  });
+    props.actions.getCategories()
+  })
 
-  let selectCategory = (category)=>{
-    props.actions.changeCategory(category);
-  };
-   
-  
-
+  let selectCategory = (category) => {
+    props.actions.changeCategory(category)
+    props.actions.getProducts(category.id)
+    debugger
+  }
 
   return (
     <div>
-      <h2> <Badge color='warning'> Category List</Badge> </h2>
+      <h2>
+        {' '}
+        <Badge color="warning"> Category List</Badge>{' '}
+      </h2>
       <ListGroup>
         {props.categories.map((category) => (
           <ListGroupItem
             active={category.id == props.currentCategory.id}
             style={{
-              background: "linear-gradient(45deg, #FF569A ,#00AAFF)",
+              background: 'linear-gradient(45deg, #FF569A ,#00AAFF)',
               border: 0,
               borderRadius: 20,
-              padding: "14px 30px",
+              padding: '14px 30px',
             }}
             onClick={() => selectCategory(category)}
             key={category.id}
@@ -38,7 +40,7 @@ function CategoryList(props) {
         ))}
       </ListGroup>
 
-{/* 
+      {/* 
 
         <Button
         style={{
@@ -51,14 +53,14 @@ function CategoryList(props) {
         Go to 
       </Button> */}
     </div>
-  );
+  )
 }
 
 function mapStatetToProps(state) {
   return {
     currentCategory: state.changeCategoryReducer,
     categories: state.categoryListReducer,
-  };
+  }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -66,14 +68,15 @@ function mapDispatchToProps(dispatch) {
     actions: {
       getCategories: bindActionCreators(
         categoryActions.getCategories,
-        dispatch
+        dispatch,
       ),
       changeCategory: bindActionCreators(
         categoryActions.changeCategory,
-        dispatch
+        dispatch,
       ),
+      getProducts: bindActionCreators(productActions.getProducts, dispatch),
     },
-  };
+  }
 }
 
-export default connect(mapStatetToProps, mapDispatchToProps)(CategoryList);
+export default connect(mapStatetToProps, mapDispatchToProps)(CategoryList)
