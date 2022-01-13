@@ -13,13 +13,11 @@ function CategoryList(props) {
   let selectCategory = (category) => {
     props.actions.changeCategory(category)
     props.actions.getProducts(category.id)
-    debugger
   }
 
   return (
     <div>
       <h2>
-        {' '}
         <Badge color="warning"> Category List</Badge>{' '}
       </h2>
       <ListGroup>
@@ -27,7 +25,7 @@ function CategoryList(props) {
           <ListGroupItem
             active={category.id == props.currentCategory.id}
             style={{
-              background: 'linear-gradient(45deg, #FF569A ,#00AAFF)',
+              background: 'linear-gradient(45deg, #a23fb1 ,#4e51ec)',
               border: 0,
               borderRadius: 20,
               padding: '14px 30px',

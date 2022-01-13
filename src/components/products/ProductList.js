@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Badge, Table } from 'reactstrap'
+import { Badge, Button, Table } from 'reactstrap'
 import { bindActionCreators } from 'redux'
 import * as productActions from '../../redux/actions/productActions'
+import * as cartActioans from '../../redux/actions/cartActions'
+import alertify from 'alertifyjs'
 
 function ProductList(props) {
   useEffect(() => {
     props.actions.getProducts()
   })
+  let addToCart = (product) => {
+    props.actions.addToCart({ quantiti: 1, product })
+    alertify.success(product.productName + ' sepete eklendi.')
+  }
 
   return (
     <div>
@@ -17,12 +23,20 @@ function ProductList(props) {
       </h2>
       <Table hover>
         <thead>
-          <tr>
+          <tr
+            style={{
+              background: 'linear-gradient(45deg, #FF569A ,#FFAAFF)',
+              border: 0,
+              borderRadius: 20,
+              padding: '14px 30px',
+            }}
+          >
             <th>#</th>
             <th>Product Name</th>
             <th>Unit Price</th>
             <th>Quantity In Stock</th>
             <th>Units In Stock</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -33,6 +47,11 @@ function ProductList(props) {
               <td>{product.unitPrice}</td>
               <td>{product.quantityPerUnit}</td>
               <td>{product.unitsInStock}</td>
+              <td>
+                <Button color="success" onClick={() => addToCart(product)}>
+                  ADD
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -51,6 +70,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: {
       getProducts: bindActionCreators(productActions.getProducts, dispatch),
+      addToCart: bindActionCreators(cartActioans.addToCart, dispatch),
     },
   }
 }
