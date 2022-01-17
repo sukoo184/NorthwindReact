@@ -11,7 +11,6 @@ export default function cartReducer(state = initialState.cart, action) {
         var newState = state.map((cartItem) => {
           //cartItem daki product'ın id'si aksiyondaki id de varsa quantity'yi 1 arttır.
           if (cartItem.product.id === action.payload.product.id) {
-            debugger
             return Object.assign({}, addedItem, {
               quantity: addedItem.quantity + 1,
             })
@@ -24,7 +23,7 @@ export default function cartReducer(state = initialState.cart, action) {
         })
         return newState
       } else {
-        return [...state, { ...action.payload, quantity: state.quantity - 1 }] // Arrayın kopyasını alıp eklemek.
+        return [...state, { ...action.payload, quantity: 1 }] // Arrayın kopyasını alıp eklemek.
         //          ||         |
         //         \||/        ---> o kopyaya action ile gelen payload'ı ekle.
         //          \/

@@ -3,8 +3,13 @@ import { bindActionCreators } from 'redux'
 import * as cartActions from '../../redux/actions/cartActions'
 import { connect } from 'react-redux'
 import { Badge, Button, Table } from 'reactstrap'
+import alertify from 'alertifyjs'
 
 function CartDetail(props) {
+  let removeFromCart = (product) => {
+    props.actions.addToCart(product)
+    alertify.error(product.productName + ' sepetten silindi!')
+  }
   return (
     <div>
       {console.log(props.cartItem)}
@@ -26,9 +31,9 @@ function CartDetail(props) {
           </tr>
         </thead>
         <tbody>
-          {props.cart?.map((cartItem) => (
-            <tr key={cartItem?.product.id}>
-              <th scope="row">{cartItem?.product.id}</th>
+          {props.cart.map((cartItem) => (
+            <tr key={cartItem.product.id}>
+              <th scope="row">{cartItem.product.id}</th>
               <td>{cartItem.product.productName}</td>
               <td>{cartItem.product.unitPrice}</td>
               <td>{cartItem.quantity}</td>

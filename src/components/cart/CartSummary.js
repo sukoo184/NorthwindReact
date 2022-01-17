@@ -1,3 +1,4 @@
+import alertify from 'alertifyjs'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -17,9 +18,11 @@ import * as cartActioans from '../../redux/actions/cartActions'
 function CartSummary(props) {
   function renderEmpty() {
     return (
-      <NavItem>
-        <NavLink>Sepetiniz Boş</NavLink>
-      </NavItem>
+      <Nav>
+        <NavItem>
+          <NavLink>Sepetiniz Boş</NavLink>
+        </NavItem>
+      </Nav>
     )
   }
   function renderSummary() {
@@ -39,8 +42,12 @@ function CartSummary(props) {
                   -
                 </Badge>
                 {cartItem.product.productName}
-                {console.log(cartItem.quantity)}
-                <Badge color="success">1</Badge>
+                {console.log(cartItem)}
+                {cartItem.quantity > 0 ? (
+                  <Badge color="success"> {cartItem.quantity}</Badge>
+                ) : (
+                  <Badge></Badge>
+                )}
               </DropdownItem>
             ))}
             <DropdownItem divider />
@@ -53,7 +60,12 @@ function CartSummary(props) {
     )
   }
 
-  return <div>{props.cart.length > 0 ? renderSummary() : renderEmpty()}</div>
+  return (
+    <div>
+      {props.cart.length > 0 ? renderSummary() : renderEmpty()}{' '}
+      {console.log(props.cart)}
+    </div>
+  )
 }
 
 function mapDispatchToProps(dispatch) {

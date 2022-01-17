@@ -1,20 +1,19 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { CardText, Container } from 'reactstrap'
+import { BrowserRouter as Route, Switch } from 'react-router-dom'
+import { Container } from 'reactstrap'
 import CartDetail from '../cart/CartDetail'
 import Navi from '../navi/Navi'
+import AddOrUpdateProduct from '../products/AddOrUpdateProduct'
 import Dashboard from './Dashboard'
 
 function App() {
   return (
     <Container>
       <Navi />
-
-      <Switch>
-        <Route path="/cart" component={CartDetail} />
-        <Route path="/" component={Dashboard} />
-        <Route path="/product" component={Dashboard} />
-      </Switch>
+      <Route path="/" component={Dashboard} />
+      <Route path="/cart" component={CartDetail} />
+      <Route path="/saveProduct/:productId" component={AddOrUpdateProduct} />
+      <Route path="/product" component={Dashboard} />
     </Container>
   )
 }
